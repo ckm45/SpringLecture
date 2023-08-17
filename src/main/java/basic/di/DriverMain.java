@@ -9,11 +9,12 @@ public class DriverMain {
         car2.printTireBrand();
         
              
-        
+        //생성자를 통한 DI 
         Car car = new Car();
         HankookTire hankook = new HankookTire();
         KumhoTire kumho = new KumhoTire();
         
+        //setter를 통한 DI
         car.setTire(kumho);
         car.printTireBrand();
     }
