@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!--  properties태그에 db.properties 해주면 아래에 일일이 안써줘도 돼서 분리돼서 편하다.  -->
+    <!--  보안적으로도 좋다. (깃에 db.properties를 안올릴 수 있어서 좋다.)  -->
+    <properties resource="db.properties" />
+
+    <!--  "mybatis.board.BoardVO" 이거 너무 길어서 -> "boardVO"로 쓰겠다고 정의 -->
+    <typeAliases>
+        <typeAlias type="mybatis.BoardVO" alias="boardVO" />
+    </typeAliases>
+
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <mapper resource="mapper/mapper1.xml"/>
+    </mappers>
+
+</configuration>
