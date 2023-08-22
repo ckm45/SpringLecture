@@ -1,6 +1,8 @@
 package kr.ac.kopo.hello;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -11,6 +13,15 @@ public class HelloController {
         System.out.println("helloController 생성자입니다.");
     }
     
+    //누군가 이렇게 url을 날리게 된다 http://localhost:8080/springmvc/hello/3
+    @RequestMapping("hello/{no}")
+    public String pathv(@PathVariable("no") int n, Model model) {
+        
+        System.out.println("n : " + n);
+        model.addAttribute("n", n);
+        return "hello/hello";
+        
+    }
     
     
     // handler 생성

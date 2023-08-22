@@ -7,8 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-Hello.jsp 입니다.<br>
-welcome message = ${msg}<br>
-pathVariable = ${n}
+    upload 성공 완성했습니다.
 </body>
 </html>
