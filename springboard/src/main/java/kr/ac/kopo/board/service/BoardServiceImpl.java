@@ -19,4 +19,19 @@ public class BoardServiceImpl implements BoardService {
         return boardList;
     }
 
+
+    @Override
+    public BoardVO getPostbyNo(int no) {
+        // boardDAO에게 시킨다
+        // 이미 가지고 있는 boardDAO 멤버변수를 가지고 시킴
+        BoardVO board = boardDAO.getPostbyNo(no);
+        return board;
+    }
+
+
+    @Override
+    public void writeNewPost(BoardVO boardVO) {
+        boardDAO.writeNewPost(boardVO);
+    }
+
 }

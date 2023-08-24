@@ -26,6 +26,13 @@ public class SessionTest {
         assertNotNull(sqlSessionTemplate);        
     }
     
+    @Test
+    public void selectByNoTest() {
+        //springboard.board.dao.BoardDAO
+        BoardVO board = sqlSessionTemplate.selectOne("springboard.board.dao.BoardDAO.selectbyNo",2);        
+        System.out.println(board);                
+    }
+    
     
     @Test
     public void BoardServiceTest() {
@@ -47,4 +54,6 @@ public class SessionTest {
         }
         
     }
+    
+    
 }
