@@ -16,7 +16,7 @@ import kr.ac.kopo.member.vo.MemberVO;
 
 
 @Controller
-@SessionAttributes("currentUser")
+@SessionAttributes({"currentUser","dest"})
 public class MemberController {
 
     @Autowired
@@ -30,7 +30,7 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public String loginProcess(@Valid LoginVO loginVO, Errors errors, Model model) {
+    public String loginProcess(@Valid LoginVO loginVO, Errors errors, Model model, HttpSession session) {
         if (errors.hasErrors()) { // error가 존재시에 다시 로그인 페이지로 이동
             return "member/loginForm";
 
@@ -50,8 +50,20 @@ public class MemberController {
              */
             
             model.addAttribute("currentUser", memberVO);
+            //*************************************
+            //수정 필요. redirect 주소 수정 필요
+            //**************************************
             
-            return "redirect:/";
+            String dest = (String) session.getAttribute("dest");
+            session.removeAttribute("dest");
+            if(dest == null) {
+                return "redirect:/";
+            } else {  //dest가 있으면,로그인을 안해서 interceptor가 잡아와서 생긴 dest 세션이다.
+                return "redirect:"+dest;
+            }
+            
+         
+            
         } // error가 존재하지 않을 때, 정상 시나리오
 
     }
@@ -65,8 +77,8 @@ public class MemberController {
     }
     
     @GetMapping("/logout")
-    public String logout2(SessionStatus sessionStatus) {
-        //session.invalidate();
+    public String logout2(SessionStatus sessionStatus, HttpSession session) {
+        //session.invalidate(); 
         sessionStatus.setComplete();
         return "redirect:/";
     }
