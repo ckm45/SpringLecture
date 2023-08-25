@@ -1,5 +1,6 @@
 package kr.ac.kopo.member.controller;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -7,16 +8,20 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import kr.ac.kopo.member.service.MemberService;
 import kr.ac.kopo.member.vo.LoginVO;
 import kr.ac.kopo.member.vo.MemberVO;
 
+
 @Controller
+@SessionAttributes("currentUser")
 public class MemberController {
 
     @Autowired
     private MemberService memberService;
-
+    
     @GetMapping("/login")
     public String loginForm(Model model) {
         LoginVO loginVO = new LoginVO();
@@ -38,10 +43,35 @@ public class MemberController {
             }
             System.out.println("Login이 완료되었습니다. ");
             System.out.println(memberVO);
-            return "redirect:/board";
-        } // 존재하지 않을 때
+
+            /*
+             * // session에 등록, jsp에서 ${currentUser} 를 통해 접근 가능 hong/1111 => memberVO
+             * session.setAttribute("currentUser", memberVO);
+             */
+            
+            model.addAttribute("currentUser", memberVO);
+            
+            return "redirect:/";
+        } // error가 존재하지 않을 때, 정상 시나리오
 
     }
+       
+    //@GetMapping("/logout")
+    public String logout(HttpSession session) {
+        //session.removeAttribute("currentUser");
+        session.invalidate();  //setAttribute 로 만든 세션은 이렇게 지운다 
+        
+        return "redirect:/";
+    }
+    
+    @GetMapping("/logout")
+    public String logout2(SessionStatus sessionStatus) {
+        //session.invalidate();
+        sessionStatus.setComplete();
+        return "redirect:/";
+    }
+
+    
 
     @GetMapping("/join")
     public String joinForm(Model model) {

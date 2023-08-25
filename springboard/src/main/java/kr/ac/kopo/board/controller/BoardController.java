@@ -40,11 +40,14 @@ public class BoardController {
         if(br.hasErrors()){
             System.out.println(" Error!!! ");
             return "board/writeForm"; //boardlist.jsp
-        }
+        }else {        
         
+            
         boardService.writeNewPost(boardVO);
+        
         return "redirect:/board";
         //http://localhost:8080/springboard/board
+        }
     }
     
     
