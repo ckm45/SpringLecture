@@ -6,6 +6,38 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+<script>
+$(document).ready(function(){
+	$('#replyAddBtn').click(function(){
+		alert('클릭 성공')
+		//reply insert를 여기서 할 것
+		
+		let replyContent = document.replyForm.content.value;
+		let replyWriter = document.replyForm.writer.value;
+		
+		$.ajax({
+			url :  '${pageContext.request.contextPath}/reply'     ,
+			method :   'post',
+			data:  {
+				boardNo : ${boardVO.no},
+				content: replyContent,
+				writer:  replyWriter
+				
+			},
+			success:     function(){
+				alert('insert성공');
+				document.replyForm.content.value="";
+				document.replyForm.writer.value="";
+			},
+			error:       function(){
+				alert('insert실패')
+			}
+		})
+	})
+})
+
+</script>
 </head>
 <body>
 <a href="${pageContext.request.contextPath}/"><img alt="" src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png"></a>
@@ -49,6 +81,18 @@
 				<td>${boardVO.count }</td>
 			</tr>
 		</table>
+		<input type="button" value="Home" onclick="location.href='${pageContext.request.contextPath}/'">
+		<input type="button" value="목록으로" onclick="location.href='${pageContext.request.contextPath}/board'">
+		<input type="button" value="삭제" onclick="location.href='${pageContext.request.contextPath}/'">
 	</div>
+	
+	<div>
+	   <form name="replyForm">
+	       댓글: <input type= "text" size="80" name="content">
+	       작성자: <input type = "text" size ="20" name ="writer">
+	       <input type="button" value="댓글쓰기" id="replyAddBtn">
+	   </form>	   
+	</div>
+	
 </body>
 </html>

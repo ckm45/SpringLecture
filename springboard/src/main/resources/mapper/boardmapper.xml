@@ -5,18 +5,18 @@
 
 <!-- namespace 보통 패키지 명으로 -->
 <mapper namespace="springboard.board.dao.BoardDAO">
-	<insert id="insert" parameterType="kr.ac.kopo.board.vo.BoardVO">
+	<insert id="insert" parameterType="boardVO">
 		insert into t_board(no,title,writer,content)
 		values (seq_t_board_no.nextval, #{title}, #{writer}, #{content} )
 	</insert>
 
 
-	<select id="selectAll" resultType="kr.ac.kopo.board.vo.BoardVO">
+	<select id="selectAll" resultType="boardVO">
 		select * from t_board
 	</select>
 
 	<select id="selectbyNo" parameterType="int"
-		resultType="kr.ac.kopo.board.vo.BoardVO">
+		resultType="boardVO">
 		select no,title,writer,content,reg_date as regDate, count
 		from t_board
 		where no = #{no}

@@ -6,12 +6,12 @@
 <!-- namespace 보통 패키지 명으로 -->
 <mapper namespace="springboard.member.dao.MemberDAO">
 
-	<select id="login" parameterType="kr.ac.kopo.member.vo.LoginVO"
-		resultType="kr.ac.kopo.member.vo.MemberVO">
+	<select id="login" parameterType="loginVO"
+		resultType="memberVO">
 		select * from t_member
 		where id= #{id} and password = #{password}
 	</select>
-	<insert id="join" parameterType="kr.ac.kopo.member.vo.MemberVO">
+	<insert id="join" parameterType="memberVO">
         insert into t_member(no, id, password, name, addr)
         values(seq_t_member_no.nextval, #{id}, #{password}, #{name}, #{addr})
 	</insert>
