@@ -32,7 +32,7 @@
 				<th>제목</th>
 				<th>지은이</th>
 				<th>작성일</th>
-				<th>조회수</th>
+				<th>댓글수</th>
 			</tr>
 
 			<c:forEach items="${boardlist }" var="board" varStatus="loop">

@@ -3,6 +3,7 @@ package kr.ac.kopo.reply.controller;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,10 @@ public class ReplyController {
     @ResponseBody
     @PostMapping("/reply")
     public void writerReply(ReplyVO replyVO) {
+        //  서비스에게 시킬 일 
+        // 1. 댓글 수 1 증가 로직 필요해 - t_board에서
+        // 2. reply를 insert - t_reply 
+        
         replyService.insertReply(replyVO);
     }
 
@@ -34,4 +39,15 @@ public class ReplyController {
         
         return replylist;
     }
+    
+    @ResponseBody
+    @DeleteMapping("/reply/{boardNo}/{replyNo}")
+    public void deleteReply(@PathVariable("boardNo") int bno , @PathVariable("replyNo") int replyNo) {
+        
+        //100번 댓글 지워줘.
+        
+        replyService.deleteReplyByNo(bno,replyNo);
+        
+    }
+    
 }

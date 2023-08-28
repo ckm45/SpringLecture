@@ -31,5 +31,17 @@ public class BoardDAOImpl implements BoardDAO {
         sqlSessionTemplate.insert("springboard.board.dao.BoardDAO.insert", boardVO);
     }
 
+    @Override
+    public void increaseCount(int no) {
+        sqlSessionTemplate.update("springboard.board.dao.BoardDAO.increaseCount",no);
+        
+    }
+
+    @Override
+    public void decreaseCount(int bno) {
+        sqlSessionTemplate.update("springboard.board.dao.BoardDAO.decreaseCount",bno);
+           
+    }
+
 
 }

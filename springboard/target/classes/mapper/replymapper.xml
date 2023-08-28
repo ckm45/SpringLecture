@@ -15,4 +15,9 @@
          from t_reply
         where board_no = #{bno}
     </select>
+    
+    <delete id="deleteReplyByNo" parameterType="int">
+        delete from t_reply
+        where no = #{no}
+    </delete>
 </mapper>

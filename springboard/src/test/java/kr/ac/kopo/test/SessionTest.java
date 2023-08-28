@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import kr.ac.kopo.board.dao.BoardDAO;
 import kr.ac.kopo.board.service.BoardServiceImpl;
 import kr.ac.kopo.board.vo.BoardVO;
 
@@ -55,5 +56,11 @@ public class SessionTest {
         
     }
     
+    @Autowired
+    private BoardDAO boardDAO;
     
+    @Test
+    public void replyTest() {
+        boardDAO.increaseCount(3); //3번 게시글 count를 1 올려라  
+    }
 }

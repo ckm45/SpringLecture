@@ -8,16 +8,63 @@
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
 <script>
+
+function showReplyList(){
+	// 1. ajax reply list select
+	// 2. 화면에 보여주는 작업 
+	
+	$.ajax({
+		url : '${pageContext.request.contextPath}/reply/${boardVO.no}',
+		method : 'get',
+		success : function(data){ //ReplyVO list
+			console.log(data);
+			console.log(typeof data);
+			$('#replyList').empty();
+			$(data).each(function(){
+				str='<hr>';
+				str += '<strong>'+this.content +'</strong>'; 
+				str += '&nbsp;' + this.writer; + '&nbsp;';
+				str += '&nbsp;' + this.regDate + '&nbsp;';
+				str += '<button class="delBtn" id= ' + this.no +' />삭제</button>'
+			    
+				$('#replyList').append(str)
+			})
+		},
+		error : function(){
+			alert('showReplyList 실패')
+		},
+		
+	})
+}
+
+
 $(document).ready(function(){
+	
+	showReplyList();
+	
+	$(document).on('click','.delBtn',function(){
+		
+		let replyNo = $(this).attr('id');
+		$.ajax({
+			url : '${pageContext.request.contextPath}/reply/${boardVO.no}/' + replyNo,
+			method : 'delete',
+			success : function(){
+				showReplyList();
+			} ,
+			error : function(){
+				alert('delete 실패')
+			}	
+		})
+	})
+	
 	$('#replyAddBtn').click(function(){
-		alert('클릭 성공')
 		//reply insert를 여기서 할 것
 		
 		let replyContent = document.replyForm.content.value;
 		let replyWriter = document.replyForm.writer.value;
 		
 		$.ajax({
-			url :  '${pageContext.request.contextPath}/reply'     ,
+			url :  '${pageContext.request.contextPath}/reply',
 			method :   'post',
 			data:  {
 				boardNo : ${boardVO.no},
@@ -26,9 +73,9 @@ $(document).ready(function(){
 				
 			},
 			success:     function(){
-				alert('insert성공');
 				document.replyForm.content.value="";
 				document.replyForm.writer.value="";
+				showReplyList();
 			},
 			error:       function(){
 				alert('insert실패')
@@ -93,6 +140,9 @@ $(document).ready(function(){
 	       <input type="button" value="댓글쓰기" id="replyAddBtn">
 	   </form>	   
 	</div>
-	
+
+    <div id="replyList">
+        
+    </div>	
 </body>
 </html>
